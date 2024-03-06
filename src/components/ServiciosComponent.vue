@@ -202,16 +202,10 @@
       dialog: false,
       headers: [
         //Comenta lo de abajo   usa  para comentar /** */
-        { title: 'Cliente', value: 'nombreCliente'  },
-        { title: 'iwi' },
-        { title: 'Status', value: 'status' },
-        { title: 'Avance', value: 'avance' },
-        { title: 'Fecha Entrega Propuesta', value: 'fechaEntregaPropuesta' },
-        { title: 'Nombre Consultor', value: 'nombreConsultor' },
-        { title: 'Nombre Solución', value: 'nombreSolucion' },
-        { title: 'Alianza', value: 'alianza' },
-        { title: 'Descripción', value: 'descripcion' },
-        { title: 'Operación a Realizar', value: 'operacionRealizar' }
+        { title: 'Tipo', value: 'segmento'  },
+        { title: 'Estado', value: 'status'  },
+        { title: 'Consultor', value: 'consultor'  },
+        { title: 'Proveedor', value: 'proveedor'  },
       ],
       servicios: []
     };
