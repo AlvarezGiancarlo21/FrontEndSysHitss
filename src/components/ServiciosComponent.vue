@@ -201,7 +201,9 @@
       search: ' ',
       dialog: false,
       headers: [
+        //Comenta lo de abajo   usa  para comentar /** */
         { title: 'Cliente', value: 'nombreCliente'  },
+        { title: 'iwi' },
         { title: 'Status', value: 'status' },
         { title: 'Avance', value: 'avance' },
         { title: 'Fecha Entrega Propuesta', value: 'fechaEntregaPropuesta' },
