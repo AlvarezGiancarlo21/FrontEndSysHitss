@@ -1,15 +1,15 @@
 <template >
-    <v-card class="mx-auto card"
+    <v-card class="mx-auto card" style="background-color: aquamarine;"
       width="1100px"
       height="500px"
       >
-  
+
       <v-card-title class="d-flex align-center pe-2">
         <div class="claseCabeceraTabla">
           <v-icon icon="mdi-tools"></v-icon> &nbsp;
         Servicios Global Hitss
         </div>
-  
+
     <v-row justify="center" align="center">
       <v-dialog
         v-model="dialog"
@@ -78,7 +78,7 @@
                     required
                   ></v-text-field>
                 </v-col>
-  
+
                 <v-col
                   cols="12"
                   sm="6"
@@ -90,9 +90,9 @@
                     variant="outlined"
                     required
                   ></v-select>
-                </v-col>   
-                
-  
+                </v-col>
+
+
                 <v-col
                   cols="12"
                   sm="6"
@@ -104,7 +104,7 @@
                     variant="outlined"
                     required
                   ></v-select>
-                </v-col>     
+                </v-col>
                 <v-col
                   cols="12"
                   sm="6"
@@ -123,7 +123,7 @@
                   md="8"
                   style="height: 10px;"
                 >
-                <v-textarea 
+                <v-textarea
                   clearable
                   clear-icon="mdi-close-circle"
                   label="Descripcion"
@@ -131,38 +131,43 @@
                 ></v-textarea>
                 </v-col>
                 <div style="justify-content: center;">
-  
-                              
+
+
                 <v-col cols="12" sm="6" md="2" >
-                
-                    <v-btn 
-                    size="x-large"                   
+
+                    <v-btn
+                    size="x-large"
                     variant="text"
                     @click="dialog = false"
                     >Close</v-btn>
-                
-                
-  
-                
-                    <v-btn 
-                    size="x-large"                   
+
+
+
+
+                    <v-btn
+                    size="x-large"
                     variant="text"
                     @click="dialog = false"
                     color="blue"
                     >Crear</v-btn>
                 </v-col>
-              </div> 
-  
+              </div>
+
               </v-row>
-              
+
             </v-container>
-            
+
           </v-card-text>
         </v-card>
       </v-dialog>
     </v-row>
+    <v-row justify="center" align="center">
+        <v-btn style="background-color: #05a2a5;color: aliceblue;" @click="exportToExcel">
+          Exportar a Excel
+        </v-btn>
+      </v-row>
         <v-spacer></v-spacer>
-  
+
         <v-text-field
           v-model="search"
           prepend-inner-icon="mdi-magnify"
@@ -175,12 +180,12 @@
         ></v-text-field>
       </v-card-title>
       <v-divider></v-divider>
-  
+
       <v-data-table style="height: 440px;"
         :headers="headers"
         :items="servicios"
         :item-key="id">
-  
+
         <template v-slot:header="{ props }">
           <tr>
             <th v-for="header in props.headers" :key="header.value" :style="{ backgroundColor: 'lightgray' }">
@@ -191,8 +196,8 @@
       </v-data-table>
   </v-card>
   </template>
-  
-  
+
+
   <script>
   import axios from 'axios';
   export default {
@@ -217,10 +222,33 @@
     async fetchServicios() {
       try {
         const response = await axios.get('http://localhost:3500/servicios');
-  
+
         this.servicios = response.data;
       } catch (error) {
         console.error('Error fetching servicios:', error);
+      }
+    },
+    async exportToExcel() {
+      try {
+        // Realizar solicitud GET al endpoint de exportación de Excel
+        const response = await axios.get('http://localhost:3500/exportar-excel', {
+          responseType: 'blob' // Establecer el tipo de respuesta como blob (archivo binario)
+        });
+
+        // Crear una URL a partir de los datos recibidos
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+
+        // Crear un enlace y simular un clic para descargar el archivo
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'servicios.xlsx');
+        document.body.appendChild(link);
+        link.click();
+
+        // Limpiar la URL creada
+        window.URL.revokeObjectURL(url);
+      } catch (error) {
+        console.error('Error exporting to Excel:', error);
       }
     },
   }
@@ -229,7 +257,7 @@
   <style>
     .claseCabeceraTabla{
       text-align: center;
-      
+
     }
     .card{
       padding: 0;
@@ -238,7 +266,7 @@
     }
     .tituloNS{
       text-align: center;
-  
+
       font-size: medium;
       font-family: Georgia, 'Times New Roman', Times, serif;
       color: #008080;
